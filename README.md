@@ -1,3 +1,3 @@
 # Handlebars-helpers
 
-Just a small collection Handlebars.js helpers. (https://handlebarsjs.com/)[Handlebarsjs]
+Just a small collection Handlebars.js helpers. [Handlebarsjs](https://handlebarsjs.com/)
