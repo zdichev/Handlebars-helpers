@@ -114,3 +114,35 @@ Handlebars.registerHelper('compare', function (lvalue, rvalue, options) {
     }
 
 });
+
+
+/**
+ * Combine Handlebar tempalte with json data file and return commpiled HTML.
+ * Requires jQuery
+ * @param tmplUrl url of the template
+ * @param tmplDataUrl url of the json file
+ * @param objSel
+ * @returns {*}
+ */
+function getAndComplieHBTmpl(tmplUrl, tmplDataUrl, objSel) {
+    var dfd = new jQuery.Deferred();
+    var tmpl;
+    var tmplData;
+    $.get(tmplUrl).done(function (data) {
+        tmpl = data;
+        $.getJSON(tmplDataUrl).done(function (tData) {
+            tmplData = ((typeof objSel === 'undefined') ?  tData : Object.byString(tData,objSel));
+            var template = Handlebars.compile(tmpl),
+                html = template(tmplData);
+            dfd.resolve(html);
+
+        }).fail(function () {
+            dfd.reject("Couldn't get tempalte data");
+        });
+    }).fail(function () {
+        dfd.reject("Couldn't get tempalte");
+    });
+
+    // Return the Promise
+    return dfd.promise();
+}
